@@ -53,9 +53,13 @@ public class UsuarioService {
         usuario.setPerfil(perfil);
         usuario.setAtivo(true);
 
-        Usuario usuarioSalvo = usuarioRepository.save(usuario);
+        Usuario usuarioSalvo = usuarioRepository.saveAndFlush(usuario);
 
-        return converterParaDTO(usuarioSalvo);
+        return usuarioRepository.findById(usuarioSalvo.getId())
+                .map(this::converterParaDTO)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Não foi possível consultar o usuário cadastrado."
+                ));
     }
 
     private UsuarioResponseDTO converterParaDTO(Usuario usuario) {

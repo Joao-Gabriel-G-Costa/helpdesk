@@ -2,6 +2,7 @@ package com.joaogabriel.helpdesk.model;
 
 import jakarta.persistence.*;
 import java.time.OffsetDateTime;
+import org.hibernate.annotations.Generated;
 
 @Entity
 @Table(name = "usuarios")
@@ -26,6 +27,7 @@ public class Usuario {
     @Column(nullable = false)
     private Boolean ativo = true;
 
+    @Generated
     @Column(name = "criado_em", nullable = false, insertable = false, updatable = false)
     private OffsetDateTime criadoEm;
 
