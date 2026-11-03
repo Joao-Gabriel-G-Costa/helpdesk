@@ -26,3 +26,10 @@ Thumbs.db
 
 # Logs
 *.log
+
+# Saídas de compilação e variáveis locais
+**/target/
+**/${project.build.directory}/
+.env
+.env.*
+!.env.example
