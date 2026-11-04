@@ -6,7 +6,7 @@ import jakarta.validation.constraints.Size;
 public record CriarCategoriaRequestDTO(
 
         @NotBlank
-        @Size(max = 150)
+        @Size(max = 100)
         String nome,
 
         @Size(max = 255)

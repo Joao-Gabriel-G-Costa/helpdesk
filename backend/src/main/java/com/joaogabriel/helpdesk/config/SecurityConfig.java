@@ -19,13 +19,17 @@ public class SecurityConfig {
 
         http
                 .csrf(csrf -> csrf.disable())
+
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/usuarios")
-                        .hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/usuarios")
-                        .hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/usuarios").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/usuarios").hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.POST, "/api/categorias").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/categorias").authenticated()
+
                         .anyRequest().authenticated()
                 )
+
                 .httpBasic(withDefaults());
 
         return http.build();
