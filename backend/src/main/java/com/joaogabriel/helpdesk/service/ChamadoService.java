@@ -12,6 +12,7 @@ import com.joaogabriel.helpdesk.repository.UsuarioRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import jakarta.persistence.EntityManager;
 
 @Service
 public class ChamadoService {
@@ -19,16 +20,21 @@ public class ChamadoService {
     private final ChamadoRepository chamadoRepository;
     private final UsuarioRepository usuarioRepository;
     private final CategoriaRepository categoriaRepository;
+    private final EntityManager entityManager;
+
 
     public ChamadoService(
             ChamadoRepository chamadoRepository,
             UsuarioRepository usuarioRepository,
-            CategoriaRepository categoriaRepository) {
+            CategoriaRepository categoriaRepository,
+            EntityManager entityManager) {
 
         this.chamadoRepository = chamadoRepository;
         this.usuarioRepository = usuarioRepository;
         this.categoriaRepository = categoriaRepository;
+        this.entityManager = entityManager;
     }
+
 
     @Transactional
     public ChamadoResponseDTO cadastrar(
@@ -60,6 +66,8 @@ public class ChamadoService {
         chamado.setCategoria(categoria);
 
         Chamado chamadoSalvo = chamadoRepository.saveAndFlush(chamado);
+
+        entityManager.refresh(chamadoSalvo);
 
         return converterParaDTO(chamadoSalvo);
     }
